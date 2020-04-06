@@ -122,13 +122,8 @@ hibernate {
 environments {
     development {
         dataSource {
-            //dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            //url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:oracle:thin:@127.0.0.1:1521:BAN83"
-            driverClassName = "oracle.jdbc.OracleDriver"
-            username = "events"
-            password = "u_pick_it"
+            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+            url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
         }
     }
     test {
