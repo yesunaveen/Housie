@@ -7,15 +7,26 @@ class BootStrap {
 
     def init = { servletContext ->
 
-        def adminRole = Role.findByAuthority('ROLE_ADMIN') ?: new Role( authority:'ROLE_ADMIN' ).save(flush:true, failOnError: true )
+        def adminRole = Role.findByAuthority('ROLE_ADMIN') ?: new Role(authority: 'ROLE_ADMIN').save()
 
-        def adminUser = User.findByUsername('admin') ?: new User( username:'admin' , password:'on_the_house' , enabled:true ).save(flush:true, failOnError:true )
+        def adminUser = User.findByUsername('admin') ?: new User(username: 'admin', password: 'on_the_house').save()
 
         if ( !adminUser.authorities.contains( adminRole ) ) {
 
             UserRole.create adminUser , adminRole
 
         }
+		
+		UserRole.withSession {
+            it.flush()
+            it.clear()
+        }
+		
+		assert User.count() >= 1
+        assert Role.count() >= 1
+        assert UserRole.count() >= 1
+		
+		println "created admin user"
 
         Board.newNumber = 'Stay tuned for the first lucky number!!!'
         Board.adminMessage = 'The game will begin momentarily...'
